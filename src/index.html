@@ -125,7 +125,9 @@
   </div>
 
   <main class="main-section flex flex-col items-center justify-center px-4 py-8 bg-orange-50 rounded-lg shadow-md">
-    <h1 class="quote text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center mt-0 mb-8">Brewing moments of peace, one leaf at a time</h1>
+    <div id="quoteContainer" class="flex flex-col items-center">
+      <h1 class="quote text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center mt-0 mb-8">Brewing moments of peace, one leaf at a time</h1>
+    </div>
     <div class="image-slider shadow-lg">
       <img src="./public/tea1.jpeg" alt="Tea Image 1" class="active">
       <img src="./public/tea2.jpeg" alt="Tea Image 2">
@@ -139,7 +141,7 @@
   </footer>
 
   <!-- Modal for mobile view -->
-  <div id="contactModal" class="modal ">
+  <div id="contactModal" class="modal">
     <div class="modal-content bg-orange-100 font-bold">
       <h2>Contact</h2>
       <p>Name: Hemant Harlalka</p>
@@ -160,6 +162,24 @@
     }
 
     setInterval(showNextImage, 4000);
+
+    // Quote rotation
+    const quotes = [
+      "Bold and rich, Assam tea speaks of tradition",
+      "Experience the essence of Assam in each sip"
+
+    ];
+    let quoteIndex = 0;
+
+    function showNextQuote() {
+      const quoteElement = document.querySelector('.quote');
+      quoteElement.classList.remove('fadeInUp');
+      quoteElement.textContent = quotes[quoteIndex];
+      quoteElement.classList.add('fadeInUp');
+      quoteIndex = (quoteIndex + 1) % quotes.length;
+    }
+
+    setInterval(showNextQuote, 5000);
 
     // Navbar scroll effect
     const navbar = document.querySelector('.navbar');
