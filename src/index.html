@@ -16,7 +16,7 @@
     }
 
     body {
-      overflow-x: hidden; 
+      overflow-x: hidden; /* Prevent horizontal scroll */
     }
 
     .quote {
@@ -25,19 +25,19 @@
       opacity: 0;
       transform: translateY(20px);
       animation: fadeInUp 2s ease forwards;
-      margin-top: 0; 
+      margin-top: 0; /* Remove extra space above quote */
     }
 
     .main-section {
       font-family: 'Roboto', sans-serif;
-      flex: 1; 
+      flex: 1; /* Allow this section to expand and push the footer to the bottom */
     }
 
     .image-slider img {
       width: 100%;
-      max-width: 100%; 
-      height: auto; 
-      max-height: 300px;
+      max-width: 100%; /* Ensure images don't exceed their container */
+      height: auto; /* Maintain aspect ratio */
+      max-height: 300px; /* Limit height as needed */
       display: none;
       transition: opacity 1s ease-in-out;
     }
@@ -64,12 +64,12 @@
     }
 
     .sidebar {
-      transform: translateX(100%); 
+      transform: translateX(100%); /* Initially hidden off-screen to the right */
       transition: transform 0.3s ease-in-out;
     }
 
     .sidebar.open {
-      transform: translateX(0); 
+      transform: translateX(0); /* Slide into view from the right */
     }
 
     .modal {
@@ -121,13 +121,11 @@
       </svg>
     </button>
     <h1 class="font-bold italic text-xl mb-2">Contact</h1>
- 
+    <!-- Removed Contact Icon -->
   </div>
 
   <main class="main-section flex flex-col items-center justify-center px-4 py-8 bg-orange-50 rounded-lg shadow-md">
-    <div id="quoteContainer" class="flex flex-col items-center">
-      <h1 class="quote text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center mt-0 mb-8">Brewing moments of peace, one leaf at a time</h1>
-    </div>
+    <h1 class="quote text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center mt-0 mb-8">Brewing moments of peace, one leaf at a time</h1>
     <div class="image-slider shadow-lg">
       <img src="./public/tea1.jpeg" alt="Tea Image 1" class="active">
       <img src="./public/tea2.jpeg" alt="Tea Image 2">
@@ -140,7 +138,7 @@
     <div>Contact: 9101266959</div>
   </footer>
 
-
+  <!-- Modal for mobile view -->
   <div id="contactModal" class="modal">
     <div class="modal-content bg-orange-100 font-bold">
       <h2>Contact</h2>
@@ -150,77 +148,7 @@
     </div>
   </div>
 
-  <script>
-    let currentIndex = 0;
-    const images = document.querySelectorAll('.image-slider img');
-    const totalImages = images.length;
-
-    function showNextImage() {
-      images[currentIndex].classList.remove('active');
-      currentIndex = (currentIndex + 1) % totalImages;
-      images[currentIndex].classList.add('active');
-    }
-
-    setInterval(showNextImage, 4000);
-
-
-    const quotes = [
-      "Bold and rich, Assam tea speaks of tradition",
-      "Experience the essence of Assam in each sip"
-
-    ];
-    let quoteIndex = 0;
-
-    function showNextQuote() {
-      const quoteElement = document.querySelector('.quote');
-      quoteElement.classList.remove('fadeInUp');
-      quoteElement.textContent = quotes[quoteIndex];
-      quoteElement.classList.add('fadeInUp');
-      quoteIndex = (quoteIndex + 1) % quotes.length;
-    }
-
-    setInterval(showNextQuote, 5000);
-
-   
-    const navbar = document.querySelector('.navbar');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 50) {
-        navbar.classList.add('scrolled');
-      } else {
-        navbar.classList.remove('scrolled');
-      }
-    });
-
-  
-    const sidebar = document.getElementById('sidebar');
-    const hamburger = document.getElementById('hamburger');
-    const closeSidebar = document.getElementById('closeSidebar');
-
-    hamburger.addEventListener('click', () => {
-      sidebar.classList.toggle('open');
-    });
-
-    closeSidebar.addEventListener('click', () => {
-      sidebar.classList.remove('open');
-    });
-
-
-    const contactLink = document.getElementById('contactLink');
-    const contactModal = document.getElementById('contactModal');
-    const closeModal = document.getElementById('closeModal');
-
-    contactLink.addEventListener('click', () => {
-      if (window.innerWidth <= 768) { 
-        contactModal.classList.add('show');
-      } else {
-        document.querySelector('footer').scrollIntoView({ behavior: 'smooth' });
-      }
-    });
-
-    closeModal.addEventListener('click', () => {
-      contactModal.classList.remove('show');
-    });
-  </script>
-
+  <!-- Link to the external JavaScript file -->
+  <script src="index.js"></script>
 </body>
 </html>
