@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    body {
+      overflow-x: hidden; /* Prevent horizontal scroll */
+    }
+
+    .quote {
+      font-family: 'Great Vibes', cursive;
+      color: black;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 2s ease forwards;
+      margin-top: 0; /* Remove extra space above quote */
+    }
+
+    .main-section {
+      font-family: 'Roboto', sans-serif;
+      flex: 1; /* Allow this section to expand and push the footer to the bottom */
+    }
+
+    .image-slider img {
+      width: 100%;
+      max-width: 100%; /* Ensure images don't exceed their container */
+      height: auto; /* Maintain aspect ratio */
+      max-height: 300px; /* Limit height as needed */
+      display: none;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .image-slider img.active {
+      display: block;
+      opacity: 1;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .navbar {
+      transition: background-color 0.5s ease, box-shadow 0.5s ease;
+    }
+
+    .navbar.scrolled {
+      background-color: #ffedd5;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar {
+      transform: translateX(100%); /* Initially hidden off-screen to the right */
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .sidebar.open {
+      transform: translateX(0); /* Slide into view from the right */
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar top-0 w-full h-20 flex items-center justify-between bg-orange-100 drop-shadow-lg px-4 md:px-10">
+    <div class="flex items-center">
+      <h1 class="italic text-3xl mr-3 font-bold">Easter Brew</h1>
+      <img class="h-10 w-10 hidden sm:block" src="./public/copy.jpeg" alt="Easter Brew Logo" />
+    </div>
+    <div class="flex items-center">
+      <h1 id="contactLink" class="cursor-pointer hidden md:block font-bold italic text-xl mr-3">Contact</h1>
+      <img class="hidden md:block h-5 w-5" src="./public/icons8-phone-50.png" alt="Contact Icon">
+      <button id="hamburger" class="md:hidden focus:outline-none">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <div id="sidebar" class="sidebar fixed top-0 right-0 w-64 h-full bg-orange-100 p-4 shadow-lg z-40 flex flex-col items-start md:hidden">
+    <button id="closeSidebar" class="mb-4 focus:outline-none">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+    <h1 class="font-bold italic text-xl mb-2">Contact</h1>
+    <!-- Removed Contact Icon -->
+  </div>
+
+  <main class="main-section flex flex-col items-center justify-center px-4 py-8 bg-orange-50 rounded-lg shadow-md">
+    <h1 class="quote text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center mt-0 mb-8">Brewing moments of peace, one leaf at a time</h1>
+    <div class="image-slider shadow-lg">
+      <img src="./public/tea1.jpeg" alt="Tea Image 1" class="active">
+      <img src="./public/tea2.jpeg" alt="Tea Image 2">
+      <img src="./public/copy.jpeg" alt="Tea Image 3">
+    </div>
+  </main>
+
+  <footer class="footer h-20 bg-orange-100 font-bold italic flex flex-col items-center justify-center">
+    <div>Name: Hemant Harlalka</div>
+    <div>Contact: 9101266959</div>
+  </footer>
+
+  <!-- Modal for mobile view -->
+  <div id="contactModal" class="modal ">
+    <div class="modal-content bg-orange-100 font-bold">
+      <h2>Contact</h2>
+      <p>Name: Hemant Harlalka</p>
+      <p>Contact: 9101266959</p>
+      <button id="closeModal" class="bg-black text-white py-2 px-4 rounded mt-2">Close</button>
+    </div>
+  </div>
+
+  <script>
+    let currentIndex = 0;
+    const images = document.querySelectorAll('.image-slider img');
+    const totalImages = images.length;
+
+    function showNextImage() {
+      images[currentIndex].classList.remove('active');
+      currentIndex = (currentIndex + 1) % totalImages;
+      images[currentIndex].classList.add('active');
+    }
+
+    setInterval(showNextImage, 4000);
+
+    // Navbar scroll effect
+    const navbar = document.querySelector('.navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Sidebar toggle
+    const sidebar = document.getElementById('sidebar');
+    const hamburger = document.getElementById('hamburger');
+    const closeSidebar = document.getElementById('closeSidebar');
+
+    hamburger.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+    });
+
+    closeSidebar.addEventListener('click', () => {
+      sidebar.classList.remove('open');
+    });
+
+    // Contact link handler
+    const contactLink = document.getElementById('contactLink');
+    const contactModal = document.getElementById('contactModal');
+    const closeModal = document.getElementById('closeModal');
+
+    contactLink.addEventListener('click', () => {
+      if (window.innerWidth <= 768) { // Mobile view
+        contactModal.classList.add('show');
+      } else { // Desktop view
+        document.querySelector('footer').scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+
+    closeModal.addEventListener('click', () => {
+      contactModal.classList.remove('show');
+    });
+  </script>
+
+</body>
+</html>
