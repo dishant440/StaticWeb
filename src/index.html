@@ -16,7 +16,7 @@
     }
 
     body {
-      overflow-x: hidden; /* Prevent horizontal scroll */
+      overflow-x: hidden; 
     }
 
     .quote {
@@ -25,19 +25,19 @@
       opacity: 0;
       transform: translateY(20px);
       animation: fadeInUp 2s ease forwards;
-      margin-top: 0; /* Remove extra space above quote */
+      margin-top: 0; 
     }
 
     .main-section {
       font-family: 'Roboto', sans-serif;
-      flex: 1; /* Allow this section to expand and push the footer to the bottom */
+      flex: 1; 
     }
 
     .image-slider img {
       width: 100%;
-      max-width: 100%; /* Ensure images don't exceed their container */
-      height: auto; /* Maintain aspect ratio */
-      max-height: 300px; /* Limit height as needed */
+      max-width: 100%; 
+      height: auto; 
+      max-height: 300px;
       display: none;
       transition: opacity 1s ease-in-out;
     }
@@ -64,12 +64,12 @@
     }
 
     .sidebar {
-      transform: translateX(100%); /* Initially hidden off-screen to the right */
+      transform: translateX(100%); 
       transition: transform 0.3s ease-in-out;
     }
 
     .sidebar.open {
-      transform: translateX(0); /* Slide into view from the right */
+      transform: translateX(0); 
     }
 
     .modal {
@@ -121,7 +121,7 @@
       </svg>
     </button>
     <h1 class="font-bold italic text-xl mb-2">Contact</h1>
-    <!-- Removed Contact Icon -->
+ 
   </div>
 
   <main class="main-section flex flex-col items-center justify-center px-4 py-8 bg-orange-50 rounded-lg shadow-md">
@@ -140,7 +140,7 @@
     <div>Contact: 9101266959</div>
   </footer>
 
-  <!-- Modal for mobile view -->
+
   <div id="contactModal" class="modal">
     <div class="modal-content bg-orange-100 font-bold">
       <h2>Contact</h2>
@@ -163,7 +163,7 @@
 
     setInterval(showNextImage, 4000);
 
-    // Quote rotation
+
     const quotes = [
       "Bold and rich, Assam tea speaks of tradition",
       "Experience the essence of Assam in each sip"
@@ -181,7 +181,7 @@
 
     setInterval(showNextQuote, 5000);
 
-    // Navbar scroll effect
+   
     const navbar = document.querySelector('.navbar');
     window.addEventListener('scroll', () => {
       if (window.scrollY > 50) {
@@ -191,7 +191,7 @@
       }
     });
 
-    // Sidebar toggle
+  
     const sidebar = document.getElementById('sidebar');
     const hamburger = document.getElementById('hamburger');
     const closeSidebar = document.getElementById('closeSidebar');
@@ -204,15 +204,15 @@
       sidebar.classList.remove('open');
     });
 
-    // Contact link handler
+
     const contactLink = document.getElementById('contactLink');
     const contactModal = document.getElementById('contactModal');
     const closeModal = document.getElementById('closeModal');
 
     contactLink.addEventListener('click', () => {
-      if (window.innerWidth <= 768) { // Mobile view
+      if (window.innerWidth <= 768) { 
         contactModal.classList.add('show');
-      } else { // Desktop view
+      } else {
         document.querySelector('footer').scrollIntoView({ behavior: 'smooth' });
       }
     });
